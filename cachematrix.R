@@ -1,18 +1,32 @@
 # Matrix inversion is usually a costly computation and there may be some benefit
 # to caching the inverse of a matrix rather than compute it repeatedly. The
 # following two functions are used to cache the inverse of a matrix.
+#
+#
+# Usage
+#
+# the standard operating procedure is to use solve(matrix) to calculate inverse of matrix, 
+#
+# > matrix_o <- makeCacheMatrix(matrix)
+# > cacheSolve (matrix_o)
+#
 
+#
 # Function 1: makeCacheMatrix(x=matrix())
 #
-# make accepts a matrix as a formal argument and pack it into an object w/ the following
+# makeCacheMatrix accepts a matrix as a formal argument and pack it into an object w/ the following methods
 #
 # 1. set the value of the matrix
 # 2. get the value of the matrix
 # 3. set the value of inverse of the matrix
 # 4. get the value of inverse of the matrix
 #
-# it returns an object containing the matrix and the special info
-#
+# This function utilizes the side effects operations of R, specifically the '<<-' operator, which assigns 
+# a value to a different environment, notably the parent environment
+# The end result, to me, is akin to having a global variable
+# So you can calculate the inverse of a matrix, store it into an object's internal variable in an upper 
+# environment, and it will work as a global variable that you can reference as needed
+# 
 
 makeCacheMatrix <- function(x = matrix()) {
 
@@ -48,20 +62,6 @@ makeCacheMatrix <- function(x = matrix()) {
 # x is an output of the makeCacheMatrix, not a straight up matrix
 # cacheSolve still returns the inverse of x, by calculating it if needed or retrieve a cached version 
 # of inv(x) from parent environment if it exits
-#
-# This exercise utilizes the side effects operations of R, specifically the '<<-' operator, which assigns 
-# a value to a different environment, notably the parent environment
-# The end result, to me, is akin to having a global variable
-# So you can calculate the inverse of a matrix, store it into an object's internal variable in an upper 
-# environment, and it will work as a global variable that you can reference as needed
-# 
-
-# Usage
-#
-# the standard operating procedure is to use solve(matrix) to calculate inverse of matrix, 
-#
-# > matrix_o <- makeCacheMatrix(matrix)
-# > cacheSolve (matrix_o)
 #
 
 cacheSolve <- function(x, ...) {
